@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cliente.findByDesEmail", query = "SELECT c FROM Cliente c WHERE c.desEmail = :desEmail"),
     @NamedQuery(name = "Cliente.findByDatCriacao", query = "SELECT c FROM Cliente c WHERE c.datCriacao = :datCriacao")})
 public class Cliente implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -51,6 +52,17 @@ public class Cliente implements Serializable {
     @Size(max = 256)
     @Column(name = "des_email")
     private String desEmail;
+
+    @Size(max = 256)
+    @Column(name = "des_endereco")
+    private String desEndereco;
+    @Column(name = "num_endereco")
+    private Integer numEndereco;
+
+    @Size(max = 256)
+    @Column(name = "des_complemento")
+    private String desComplemento;
+
     @Column(name = "dat_criacao")
     @Temporal(TemporalType.DATE)
     private Date datCriacao;
@@ -90,6 +102,30 @@ public class Cliente implements Serializable {
 
     public void setDesEmail(String desEmail) {
         this.desEmail = desEmail;
+    }
+
+    public String getDesEndereco() {
+        return desEndereco;
+    }
+
+    public void setDesEndereco(String desEndereco) {
+        this.desEndereco = desEndereco;
+    }
+
+    public Integer getNumEndereco() {
+        return numEndereco;
+    }
+
+    public void setNumEndereco(Integer numEndereco) {
+        this.numEndereco = numEndereco;
+    }
+
+    public String getDesComplemento() {
+        return desComplemento;
+    }
+
+    public void setDesComplemento(String desComplemento) {
+        this.desComplemento = desComplemento;
     }
 
     public Date getDatCriacao() {
@@ -149,5 +185,5 @@ public class Cliente implements Serializable {
     public String toString() {
         return "DAO.Cliente[ idCliente=" + idCliente + " ]";
     }
-    
+
 }
