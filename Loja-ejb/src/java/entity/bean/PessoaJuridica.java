@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAO;
+package entity.bean;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -24,30 +24,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author caioboratto
  */
 @Entity
-@Table(name = "pessoa_fisica", catalog = "loja", schema = "")
+@Table(name = "pessoa_juridica", catalog = "loja", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PessoaFisica.findAll", query = "SELECT p FROM PessoaFisica p"),
-    @NamedQuery(name = "PessoaFisica.findByIdCliente", query = "SELECT p FROM PessoaFisica p WHERE p.idCliente = :idCliente"),
-    @NamedQuery(name = "PessoaFisica.findByNumCpf", query = "SELECT p FROM PessoaFisica p WHERE p.numCpf = :numCpf")})
-public class PessoaFisica implements Serializable {
+    @NamedQuery(name = "PessoaJuridica.findAll", query = "SELECT p FROM PessoaJuridica p"),
+    @NamedQuery(name = "PessoaJuridica.findByIdCliente", query = "SELECT p FROM PessoaJuridica p WHERE p.idCliente = :idCliente"),
+    @NamedQuery(name = "PessoaJuridica.findByNumCnpj", query = "SELECT p FROM PessoaJuridica p WHERE p.numCnpj = :numCnpj")})
+public class PessoaJuridica implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_cliente")
     private Integer idCliente;
-    @Size(max = 11)
-    @Column(name = "num_cpf")
-    private String numCpf;
+    @Size(max = 14)
+    @Column(name = "num_cnpj")
+    private String numCnpj;
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Cliente cliente;
 
-    public PessoaFisica() {
+    public PessoaJuridica() {
     }
 
-    public PessoaFisica(Integer idCliente) {
+    public PessoaJuridica(Integer idCliente) {
         this.idCliente = idCliente;
     }
 
@@ -59,12 +59,12 @@ public class PessoaFisica implements Serializable {
         this.idCliente = idCliente;
     }
 
-    public String getNumCpf() {
-        return numCpf;
+    public String getNumCnpj() {
+        return numCnpj;
     }
 
-    public void setNumCpf(String numCpf) {
-        this.numCpf = numCpf;
+    public void setNumCnpj(String numCnpj) {
+        this.numCnpj = numCnpj;
     }
 
     public Cliente getCliente() {
@@ -85,10 +85,10 @@ public class PessoaFisica implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PessoaFisica)) {
+        if (!(object instanceof PessoaJuridica)) {
             return false;
         }
-        PessoaFisica other = (PessoaFisica) object;
+        PessoaJuridica other = (PessoaJuridica) object;
         if ((this.idCliente == null && other.idCliente != null) || (this.idCliente != null && !this.idCliente.equals(other.idCliente))) {
             return false;
         }
@@ -97,7 +97,7 @@ public class PessoaFisica implements Serializable {
 
     @Override
     public String toString() {
-        return "DAO.PessoaFisica[ idCliente=" + idCliente + " ]";
+        return "DAO.PessoaJuridica[ idCliente=" + idCliente + " ]";
     }
     
 }

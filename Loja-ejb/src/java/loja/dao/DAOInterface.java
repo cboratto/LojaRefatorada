@@ -3,22 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAO;
+package loja.dao;
 
 import java.util.List;
+import javax.ejb.Remote;
 
 /**
  *
- * @author caioboratto
+ * @author cbsantos
  */
-public interface DaoGenerico<E> {
+@Remote
+public interface DAOInterface<E> {
+
+    public List<E> listar(String namedQuery);
 
     public void inserir(E e);
 
     public void alterar(E e);
 
     public void remover(E e);
-
-    public List<E> listar();
-
 }

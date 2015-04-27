@@ -5,7 +5,7 @@
  */
 package loja.jpa.base;
 
-import DAO.Cliente;
+import entity.bean.Cliente;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
