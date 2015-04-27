@@ -5,6 +5,7 @@
  */
 package loja.controller.app;
 
+import bean.session.ClienteBeanRemote;
 import entity.bean.Cliente;
 import loja.controller.frontcontroller.AbstractApplicationController;
 import java.util.logging.Level;
@@ -23,8 +24,8 @@ public class CadastrarController extends AbstractApplicationController {
     public void execute() {
         try {
             Context context = JNDIUtil.getCORBAInitialContext();
-            DAOInterface clienteDao = (DAOInterface) context.lookup("ClienteDAOImpl");
-            clienteDao.listar("Cliente.findAll");
+            ClienteBeanRemote cliente = (ClienteBeanRemote) context.lookup("ClienteBean");
+            cliente.getClienteList("Cliente.findAdll");
 
         } catch (Exception ex) {
             Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);
