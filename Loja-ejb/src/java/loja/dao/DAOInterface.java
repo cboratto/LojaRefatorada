@@ -6,13 +6,11 @@
 package loja.dao;
 
 import java.util.List;
-import javax.ejb.Remote;
 
 /**
  *
  * @author cbsantos
  */
-@Remote
 public interface DAOInterface<E> {
 
     public List<E> listar(String namedQuery);

@@ -6,11 +6,13 @@
 package loja.dao;
 
 import entity.bean.Cliente;
+import javax.ejb.Remote;
 
 /**
  *
  * @author cbsantos
  */
+@Remote
 public interface ClienteDAO extends DAOInterface<Cliente> {
 
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 /**
@@ -25,6 +26,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 
     @Override
     public List<Cliente> listar(String namedQuery) {
+        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        em = factory.createEntityManager();
         Query query = em.createNamedQuery(namedQuery);
         List<Cliente> listaCliente = query.getResultList();
         return listaCliente;
