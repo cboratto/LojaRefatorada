@@ -13,7 +13,7 @@
     </head>
     <body>
         <h1>Login</h1>
-        <form method="POST" action="/Loja-ejb/FrontControllerServlet?control=Listar&origem=buscaQuartos">            
+        <form method="POST" action="/FrontControllerServlet?control=Login">            
             <p>Usuario:  <input type="text" name="usuario"></p>            
             <p>Senha:  <input type="text" name="senha"></p>            
             <p><input type="submit"></p>

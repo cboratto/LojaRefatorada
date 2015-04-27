@@ -25,9 +25,8 @@ public class LojaEntityManager {
     public LojaEntityManager() {
         factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         em = factory.createEntityManager();
-       
     }
-    public static EntityManager getLojaEntityManager (){
+    public  EntityManager getLojaEntityManager (){
         return em;
     }
     

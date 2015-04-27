@@ -22,7 +22,7 @@ public class ApplicationControllerFactory {
 
     public static final ApplicationController getControllerByFullClassName(String className) {
         try {
-            String name = "loja.controller.frontcontroller." + className + "Controller";
+            String name = "loja.controller.app." + className + "Controller";
             Class actionClass = Class.forName(name);
             return getControllerByClass(actionClass);
         } catch (ClassNotFoundException e) {

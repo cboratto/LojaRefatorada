@@ -13,7 +13,7 @@
     </head>
     <body>
         <h1>Formulario de Cadastro</h1>
-        <form method="POST" action="/Loja-ejb/FrontControllerServlet?control=Cadastrar">            
+        <form method="POST" action="/Loja-war/FrontControllerServlet?control=Cadastrar">            
             <h3>Usuario</h3>
             <p>Usuario:  <input type="text" name="user"></p>            
             <p>Senha:   <input type="text" name="senha"></p>            

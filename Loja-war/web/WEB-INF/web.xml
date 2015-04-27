@@ -7,9 +7,9 @@
         <servlet-name>FrontControllerServlet</servlet-name>
         <servlet-class>loja.controller.frontcontroller.FrontControllerServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
+      <servlet-mapping>
         <servlet-name>FrontControllerServlet</servlet-name>
-        <url-pattern>/Loja-war/*</url-pattern>
+        <url-pattern>/FrontControllerServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
