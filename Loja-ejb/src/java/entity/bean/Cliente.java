@@ -7,15 +7,15 @@ package entity.bean;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -23,25 +23,27 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author caioboratto
+ * @author cbsantos
  */
 @Entity
-@Table(name = "cliente", catalog = "loja", schema = "")
+@Table(name = "cliente")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
     @NamedQuery(name = "Cliente.findByIdCliente", query = "SELECT c FROM Cliente c WHERE c.idCliente = :idCliente"),
     @NamedQuery(name = "Cliente.findByNomCliente", query = "SELECT c FROM Cliente c WHERE c.nomCliente = :nomCliente"),
     @NamedQuery(name = "Cliente.findByDesEmail", query = "SELECT c FROM Cliente c WHERE c.desEmail = :desEmail"),
+    @NamedQuery(name = "Cliente.findByDesEndereco", query = "SELECT c FROM Cliente c WHERE c.desEndereco = :desEndereco"),
+    @NamedQuery(name = "Cliente.findByNumEndereco", query = "SELECT c FROM Cliente c WHERE c.numEndereco = :numEndereco"),
+    @NamedQuery(name = "Cliente.findByDesComplemento", query = "SELECT c FROM Cliente c WHERE c.desComplemento = :desComplemento"),
     @NamedQuery(name = "Cliente.findByDatCriacao", query = "SELECT c FROM Cliente c WHERE c.datCriacao = :datCriacao")})
 public class Cliente implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_cliente")
@@ -52,26 +54,19 @@ public class Cliente implements Serializable {
     @Size(max = 256)
     @Column(name = "des_email")
     private String desEmail;
-
     @Size(max = 256)
     @Column(name = "des_endereco")
     private String desEndereco;
     @Column(name = "num_endereco")
     private Integer numEndereco;
-
     @Size(max = 256)
     @Column(name = "des_complemento")
     private String desComplemento;
-
     @Column(name = "dat_criacao")
     @Temporal(TemporalType.DATE)
     private Date datCriacao;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private PessoaFisica pessoaFisica;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private PessoaJuridica pessoaJuridica;
-    @OneToMany(mappedBy = "idCliente")
-    private List<Login> loginList;
+    private Login login;
 
     public Cliente() {
     }
@@ -136,29 +131,12 @@ public class Cliente implements Serializable {
         this.datCriacao = datCriacao;
     }
 
-    public PessoaFisica getPessoaFisica() {
-        return pessoaFisica;
+    public Login getLogin() {
+        return login;
     }
 
-    public void setPessoaFisica(PessoaFisica pessoaFisica) {
-        this.pessoaFisica = pessoaFisica;
-    }
-
-    public PessoaJuridica getPessoaJuridica() {
-        return pessoaJuridica;
-    }
-
-    public void setPessoaJuridica(PessoaJuridica pessoaJuridica) {
-        this.pessoaJuridica = pessoaJuridica;
-    }
-
-    @XmlTransient
-    public List<Login> getLoginList() {
-        return loginList;
-    }
-
-    public void setLoginList(List<Login> loginList) {
-        this.loginList = loginList;
+    public void setLogin(Login login) {
+        this.login = login;
     }
 
     @Override
@@ -183,7 +161,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "DAO.Cliente[ idCliente=" + idCliente + " ]";
+        return "entity.bean.Cliente[ idCliente=" + idCliente + " ]";
     }
-
+    
 }

@@ -22,7 +22,7 @@ public class ClienteBean implements ClienteBeanRemote{
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    Cliente cliente = new Cliente();
+    Cliente cliente;
     ClienteDAO clienteDao = new ClienteDAOImpl();
 
     @Override
@@ -39,6 +39,10 @@ public class ClienteBean implements ClienteBeanRemote{
     public List<Cliente> getClienteList() {
         return clienteDao.listar();
         
+    }
+    @Override
+    public void clienteInsert(Cliente cliente) {
+        clienteDao.inserir(cliente);
     }
 
 }

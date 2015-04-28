@@ -5,14 +5,14 @@
  */
 package loja.controller.app;
 
-import bean.session.ClienteBean;
 import bean.session.ClienteBeanRemote;
+import entity.bean.Cliente;
+import entity.bean.Login;
 import loja.controller.frontcontroller.AbstractApplicationController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
 import util.JNDIUtil;
-import javax.ejb.EJB;
 
 /**
  *
@@ -26,9 +26,21 @@ public class CadastrarController extends AbstractApplicationController {
     public void execute() {
         try {
             Context context = JNDIUtil.getCORBAInitialContext();
-            ClienteBeanRemote cliente = (ClienteBeanRemote) context.lookup("ClienteBean");
+            ClienteBeanRemote cliente = (ClienteBeanRemote) context.lookup("ClienteBean");           
             
-            cliente.getClienteList();
+            Cliente novoCliente = new Cliente();
+            Login   novoLogin = new Login();
+            
+            novoCliente.setNomCliente(this.getRequest().getParameter("nome"));            
+            novoCliente.setDesEmail(this.getRequest().getParameter("email"));
+            novoCliente.setDesEndereco(this.getRequest().getParameter("endereco"));
+            novoCliente.setNumEndereco(Integer.parseInt((this.getRequest().getParameter("enderecoNumero"))));                                                                                                           
+            
+            //login
+            novoLogin.setNamLogin(this.getRequest().getParameter("user"));
+            novoLogin.setDesPassword(this.getRequest().getParameter("senha"));
+            
+            cliente.clienteInsert(novoCliente);
 
         } catch (Exception ex) {
             Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);

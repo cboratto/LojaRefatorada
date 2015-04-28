@@ -21,6 +21,8 @@ public interface ClienteBeanRemote {
     public void setCliente(Cliente cliente);
 
     public List<Cliente> getClienteList();
+    
+    public void clienteInsert(Cliente cliente);
      
     
 }

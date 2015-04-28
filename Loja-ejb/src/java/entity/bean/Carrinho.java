@@ -7,7 +7,6 @@ package entity.bean;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,20 +15,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author caioboratto
+ * @author cbsantos
  */
 @Entity
-@Table(name = "carrinho", catalog = "loja", schema = "")
+@Table(name = "carrinho")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Carrinho.findAll", query = "SELECT c FROM Carrinho c"),
@@ -45,13 +42,9 @@ public class Carrinho implements Serializable {
     @Column(name = "dat_criacao")
     @Temporal(TemporalType.DATE)
     private Date datCriacao;
-    @OneToMany(mappedBy = "idCarrinho")
-    private List<CarrinhoItem> carrinhoItemList;
-    @JoinColumn(name = "id_login", referencedColumnName = "id_login")
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
     @ManyToOne
-    private Login idLogin;
-    @OneToMany(mappedBy = "idCarrinho")
-    private List<Pedido> pedidoList;
+    private Login idCliente;
 
     public Carrinho() {
     }
@@ -76,30 +69,12 @@ public class Carrinho implements Serializable {
         this.datCriacao = datCriacao;
     }
 
-    @XmlTransient
-    public List<CarrinhoItem> getCarrinhoItemList() {
-        return carrinhoItemList;
+    public Login getIdCliente() {
+        return idCliente;
     }
 
-    public void setCarrinhoItemList(List<CarrinhoItem> carrinhoItemList) {
-        this.carrinhoItemList = carrinhoItemList;
-    }
-
-    public Login getIdLogin() {
-        return idLogin;
-    }
-
-    public void setIdLogin(Login idLogin) {
-        this.idLogin = idLogin;
-    }
-
-    @XmlTransient
-    public List<Pedido> getPedidoList() {
-        return pedidoList;
-    }
-
-    public void setPedidoList(List<Pedido> pedidoList) {
-        this.pedidoList = pedidoList;
+    public void setIdCliente(Login idCliente) {
+        this.idCliente = idCliente;
     }
 
     @Override
@@ -124,7 +99,7 @@ public class Carrinho implements Serializable {
 
     @Override
     public String toString() {
-        return "DAO.Carrinho[ idCarrinho=" + idCarrinho + " ]";
+        return "entity.bean.Carrinho[ idCarrinho=" + idCarrinho + " ]";
     }
     
 }

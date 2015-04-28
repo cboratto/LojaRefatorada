@@ -11,12 +11,14 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,24 +29,27 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author caioboratto
+ * @author cbsantos
  */
 @Entity
-@Table(name = "login", catalog = "loja", schema = "")
+@Table(name = "login")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),
-    @NamedQuery(name = "Login.findByIdLogin", query = "SELECT l FROM Login l WHERE l.idLogin = :idLogin"),
+    @NamedQuery(name = "Login.findByIdCliente", query = "SELECT l FROM Login l WHERE l.idCliente = :idCliente"),
     @NamedQuery(name = "Login.findByNamLogin", query = "SELECT l FROM Login l WHERE l.namLogin = :namLogin"),
     @NamedQuery(name = "Login.findByDesPassword", query = "SELECT l FROM Login l WHERE l.desPassword = :desPassword"),
     @NamedQuery(name = "Login.findByDatCreation", query = "SELECT l FROM Login l WHERE l.datCreation = :datCreation")})
 public class Login implements Serializable {
+    @OneToMany(mappedBy = "idCliente")
+    private List<Carrinho> carrinhoList;
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_login")
-    private Integer idLogin;
+    @Column(name = "id_cliente")
+    private Integer idCliente;
     @Size(max = 256)
     @Column(name = "nam_login")
     private String namLogin;
@@ -54,25 +59,23 @@ public class Login implements Serializable {
     @Column(name = "dat_creation")
     @Temporal(TemporalType.DATE)
     private Date datCreation;
-    @OneToMany(mappedBy = "idLogin")
-    private List<Carrinho> carrinhoList;
-    @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
-    @ManyToOne
-    private Cliente idCliente;
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Cliente cliente;
 
     public Login() {
     }
 
-    public Login(Integer idLogin) {
-        this.idLogin = idLogin;
+    public Login(Integer idCliente) {
+        this.idCliente = idCliente;
     }
 
-    public Integer getIdLogin() {
-        return idLogin;
+    public Integer getIdCliente() {
+        return idCliente;
     }
 
-    public void setIdLogin(Integer idLogin) {
-        this.idLogin = idLogin;
+    public void setIdCliente(Integer idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getNamLogin() {
@@ -99,27 +102,18 @@ public class Login implements Serializable {
         this.datCreation = datCreation;
     }
 
-    @XmlTransient
-    public List<Carrinho> getCarrinhoList() {
-        return carrinhoList;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setCarrinhoList(List<Carrinho> carrinhoList) {
-        this.carrinhoList = carrinhoList;
-    }
-
-    public Cliente getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Cliente idCliente) {
-        this.idCliente = idCliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idLogin != null ? idLogin.hashCode() : 0);
+        hash += (idCliente != null ? idCliente.hashCode() : 0);
         return hash;
     }
 
@@ -130,7 +124,7 @@ public class Login implements Serializable {
             return false;
         }
         Login other = (Login) object;
-        if ((this.idLogin == null && other.idLogin != null) || (this.idLogin != null && !this.idLogin.equals(other.idLogin))) {
+        if ((this.idCliente == null && other.idCliente != null) || (this.idCliente != null && !this.idCliente.equals(other.idCliente))) {
             return false;
         }
         return true;
@@ -138,7 +132,16 @@ public class Login implements Serializable {
 
     @Override
     public String toString() {
-        return "DAO.Login[ idLogin=" + idLogin + " ]";
+        return "entity.bean.Login[ idCliente=" + idCliente + " ]";
+    }
+
+    @XmlTransient
+    public List<Carrinho> getCarrinhoList() {
+        return carrinhoList;
+    }
+
+    public void setCarrinhoList(List<Carrinho> carrinhoList) {
+        this.carrinhoList = carrinhoList;
     }
     
 }

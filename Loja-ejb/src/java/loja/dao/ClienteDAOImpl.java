@@ -5,8 +5,11 @@
  */
 package loja.dao;
 
+import bean.singleton.EntityManagerSingleton;
 import entity.bean.Cliente;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,26 +22,34 @@ import javax.persistence.Query;
  */
 @Stateless(mappedName = "ClienteDAOImpl")
 public class ClienteDAOImpl implements ClienteDAO {
-
-    private static final String PERSISTENCE_UNIT_NAME = "Loja-ejbPU";
-    private static EntityManagerFactory factory;
+   
     private static EntityManager em;
 
     @Override
     public List<Cliente> listar() {
-        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        em = factory.createEntityManager();
-        
-//        em = Singleton.getInstance().getEntityManager();
+        try {
+            em = EntityManagerSingleton.getInstance().getConnection();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ClienteDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //valida se o usuário já esta cadastrado na base
         Query query = em.createNamedQuery("Cliente.findAll");
-    
         List<Cliente> listaCliente = query.getResultList();
         return listaCliente;
     }
 
     @Override
     public void inserir(Cliente e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            em = EntityManagerSingleton.getInstance().getConnection();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ClienteDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //valida se o usuário já esta cadastrado na base
+        em.getTransaction().begin();
+        em.persist(e);        
+        em.getTransaction().commit();
+        em.getTransaction().commit();
     }
 
     @Override
