@@ -25,10 +25,13 @@ public class ClienteDAOImpl implements ClienteDAO {
     private static EntityManager em;
 
     @Override
-    public List<Cliente> listar(String namedQuery) {
+    public List<Cliente> listar() {
         factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         em = factory.createEntityManager();
-        Query query = em.createNamedQuery(namedQuery);
+        
+//        em = Singleton.getInstance().getEntityManager();
+        Query query = em.createNamedQuery("Cliente.findAll");
+    
         List<Cliente> listaCliente = query.getResultList();
         return listaCliente;
     }

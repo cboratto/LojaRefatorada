@@ -21,7 +21,8 @@ public class ClienteBean implements ClienteBeanRemote{
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    Cliente cliente;
+
+    Cliente cliente = new Cliente();
     ClienteDAO clienteDao = new ClienteDAOImpl();
 
     @Override
@@ -35,8 +36,8 @@ public class ClienteBean implements ClienteBeanRemote{
     }
 
     @Override
-    public List<Cliente> getClienteList(String namedQuery) {
-        return clienteDao.listar(namedQuery);
+    public List<Cliente> getClienteList() {
+        return clienteDao.listar();
         
     }
 

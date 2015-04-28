@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface DAOInterface<E> {
 
-    public List<E> listar(String namedQuery);
+    public List<E> listar();
 
     public void inserir(E e);
 

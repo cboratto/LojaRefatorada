@@ -13,14 +13,14 @@ import javax.ejb.Remote;
  *
  * @author caioboratto
  */
-@Remote
+@Remote()
 public interface ClienteBeanRemote {
 
     public Cliente getCliente();
 
     public void setCliente(Cliente cliente);
 
-    public List<Cliente> getClienteList(String namedQuery);
+    public List<Cliente> getClienteList();
      
     
 }
