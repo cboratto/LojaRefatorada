@@ -6,6 +6,7 @@
 package loja.dao;
 
 import bean.singleton.EntityManagerSingleton;
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import entity.bean.Cliente;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,7 +23,7 @@ import javax.persistence.Query;
  */
 @Stateless(mappedName = "ClienteDAOImpl")
 public class ClienteDAOImpl implements ClienteDAO {
-   
+
     private static EntityManager em;
 
     @Override
@@ -39,17 +40,23 @@ public class ClienteDAOImpl implements ClienteDAO {
     }
 
     @Override
-    public void inserir(Cliente e) {
+    public void inserir(Cliente e)  {
         try {
             em = EntityManagerSingleton.getInstance().getConnection();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClienteDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //valida se o usuário já esta cadastrado na base
-        em.getTransaction().begin();
-        em.persist(e);        
-        em.getTransaction().commit();
-        em.getTransaction().commit();
+
+        try {
+            em.getTransaction().begin();
+            em.persist(e);
+            em.getTransaction().commit();
+
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            Logger.getLogger(ClienteDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        em.close();
     }
 
     @Override

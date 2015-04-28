@@ -7,6 +7,7 @@ package entity.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.annotation.Generated;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,8 +45,7 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Basic(optional = false)
-    @NotNull
+    @Basic(optional = false)    
     @Column(name = "id_cliente")
     private Integer idCliente;
     @Size(max = 256)
@@ -62,7 +62,7 @@ public class Cliente implements Serializable {
     @Size(max = 256)
     @Column(name = "des_complemento")
     private String desComplemento;
-    @Column(name = "dat_criacao")
+    @Column(name = "dat_criacao",columnDefinition = "date default now()", insertable = false)
     @Temporal(TemporalType.DATE)
     private Date datCriacao;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "cliente")
@@ -162,6 +162,6 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return "entity.bean.Cliente[ idCliente=" + idCliente + " ]";
-    }
-    
+    }  
+ 
 }

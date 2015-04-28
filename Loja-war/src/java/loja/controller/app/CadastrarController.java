@@ -6,12 +6,16 @@
 package loja.controller.app;
 
 import bean.session.ClienteBeanRemote;
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import entity.bean.Cliente;
 import entity.bean.Login;
+import entity.bean.PessoaFisica;
+import entity.bean.PessoaJuridica;
 import loja.controller.frontcontroller.AbstractApplicationController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
+import loja.dao.ClienteDAOImpl;
 import util.JNDIUtil;
 
 /**
@@ -26,21 +30,34 @@ public class CadastrarController extends AbstractApplicationController {
     public void execute() {
         try {
             Context context = JNDIUtil.getCORBAInitialContext();
-            ClienteBeanRemote cliente = (ClienteBeanRemote) context.lookup("ClienteBean");           
-            
+            ClienteBeanRemote cliente = (ClienteBeanRemote) context.lookup("ClienteBean");
+
             Cliente novoCliente = new Cliente();
-            Login   novoLogin = new Login();
-            
-            novoCliente.setNomCliente(this.getRequest().getParameter("nome"));            
+            Login novoLogin = new Login();
+
+            novoCliente.setNomCliente(this.getRequest().getParameter("nome"));
             novoCliente.setDesEmail(this.getRequest().getParameter("email"));
             novoCliente.setDesEndereco(this.getRequest().getParameter("endereco"));
-            novoCliente.setNumEndereco(Integer.parseInt((this.getRequest().getParameter("enderecoNumero"))));                                                                                                           
-            
+            novoCliente.setNumEndereco(Integer.parseInt((this.getRequest().getParameter("enderecoNumero"))));
+            novoCliente.setDesComplemento(this.getRequest().getParameter("complemento"));
+
+            //
             //login
             novoLogin.setNamLogin(this.getRequest().getParameter("user"));
             novoLogin.setDesPassword(this.getRequest().getParameter("senha"));
-            
-            cliente.clienteInsert(novoCliente);
+
+            //relaciona
+            novoCliente.setLogin(novoLogin);
+
+            //insere no banco
+            try {
+                cliente.clienteInsert(novoCliente);
+            } catch (Exception ex) {
+                if (ex.equals(new MySQLIntegrityConstraintViolationException())) {
+                    Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);
+                    this.setReturnPage("/cadastro_userdup.jsp");
+                }
+            }
 
         } catch (Exception ex) {
             Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);

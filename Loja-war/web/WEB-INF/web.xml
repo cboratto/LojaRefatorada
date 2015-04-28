@@ -7,7 +7,7 @@
         <servlet-name>FrontControllerServlet</servlet-name>
         <servlet-class>loja.controller.frontcontroller.FrontControllerServlet</servlet-class>
     </servlet>
-      <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>FrontControllerServlet</servlet-name>
         <url-pattern>/FrontControllerServlet</url-pattern>
     </servlet-mapping>
@@ -16,4 +16,8 @@
             30
         </session-timeout>
     </session-config>
+    <context-param>
+        <param-name>javax.faces.VALIDATE_EMPTY_FIELDS</param-name>
+        <param-value>false</param-value>
+    </context-param>
 </web-app>
