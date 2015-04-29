@@ -5,6 +5,7 @@
  */
 package loja.controller.app;
 
+import bean.exceptions.DupValOnIndexException;
 import bean.session.ClienteBeanRemote;
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import entity.bean.Cliente;
@@ -28,6 +29,9 @@ public class CadastrarController extends AbstractApplicationController {
     //private ClienteBean cliente;
     @Override
     public void execute() {
+        //pagina default de retorno
+        this.setReturnPage("/lista_hoteis.jsp");
+
         try {
             Context context = JNDIUtil.getCORBAInitialContext();
             ClienteBeanRemote cliente = (ClienteBeanRemote) context.lookup("ClienteBean");
@@ -48,25 +52,19 @@ public class CadastrarController extends AbstractApplicationController {
 
             //relaciona
             novoCliente.setLogin(novoLogin);
-
-            //insere no banco
+            novoLogin.setCliente(novoCliente);
+            
+            //insere no banco            
             try {
                 cliente.clienteInsert(novoCliente);
-            } catch (Exception ex) {
-                if (ex.equals(new MySQLIntegrityConstraintViolationException())) {
-                    Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);
-                    this.setReturnPage("/cadastro_userdup.jsp");
-                }
+            } catch (Exception d) {
+                this.setReturnPage("/cadastro_userdup.jsp");
             }
 
         } catch (Exception ex) {
             Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        //Cliente cliente = new Cliente();
-        //cliente.setIdCliente(99);
-        //cliente.setNomCliente((getRequest().getParameter("nome")));
-        this.setReturnPage("/lista_hoteis.jsp");
         //this.getRequest().setAttribute("lista_hoteis", hoteis);
     }
 

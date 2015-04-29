@@ -45,9 +45,8 @@ public class Login implements Serializable {
     private List<Carrinho> carrinhoList;
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy =GenerationType.AUTO )
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id_cliente")
     private Integer idCliente;
     @Size(max = 256)
@@ -60,7 +59,7 @@ public class Login implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date datCreation;
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false )
     private Cliente cliente;
 
     public Login() {

@@ -46,7 +46,7 @@ public class ClienteDAOImpl implements ClienteDAO {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClienteDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         try {
             em.getTransaction().begin();
             em.persist(e);
