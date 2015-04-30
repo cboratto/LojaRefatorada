@@ -5,6 +5,7 @@
  */
 package loja.dao;
 
+import bean.exceptions.DupValOnIndexException;
 import bean.singleton.EntityManagerSingleton;
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import entity.bean.Cliente;
@@ -40,23 +41,26 @@ public class ClienteDAOImpl implements ClienteDAO {
     }
 
     @Override
-    public void inserir(Cliente e)  {
+    public void inserir(Cliente e) throws DupValOnIndexException {
         try {
             em = EntityManagerSingleton.getInstance().getConnection();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClienteDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try {
             em.getTransaction().begin();
             em.persist(e);
             em.getTransaction().commit();
 
         } catch (Exception ex) {
-            em.getTransaction().rollback();
-            Logger.getLogger(ClienteDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            if (ex instanceof MySQLIntegrityConstraintViolationException) {
+                throw new DupValOnIndexException();
+            } else {
+                em.getTransaction().rollback();
+                Logger.getLogger(ClienteDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        em.close();
     }
 
     @Override

@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bean.session;
+package loja.dao;
 
-import entity.bean.Cliente;
-import javax.ejb.Remote;
+import entity.bean.Login;
 
 /**
  *
  * @author caioboratto
  */
-@Remote()
-public interface ClienteBeanRemote extends InterfaceBeanRemote<Cliente> {
+public interface LoginDAO extends DAOInterface<Login> {
 
 }

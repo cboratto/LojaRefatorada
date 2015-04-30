@@ -3,22 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package loja.dao;
+package bean.session;
 
 import bean.exceptions.DupValOnIndexException;
 import java.util.List;
 
 /**
  *
- * @author cbsantos
+ * @author caioboratto
  */
-public interface DAOInterface<E> {
+public interface InterfaceBeanRemote<E> {
 
-    public List<E> listar();
+    public Object getObject();
 
-    public void inserir(E e) throws DupValOnIndexException;
+    public void setObjet(E e);
 
-    public void alterar(E e);
+    public List<E> getObjectList();
 
-    public void remover(E e);
+    public void save(E e) throws DupValOnIndexException;
 }

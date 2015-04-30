@@ -5,18 +5,14 @@
  */
 package loja.controller.app;
 
-import bean.exceptions.DupValOnIndexException;
 import bean.session.ClienteBeanRemote;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import bean.session.LoginBeanRemote;
 import entity.bean.Cliente;
 import entity.bean.Login;
-import entity.bean.PessoaFisica;
-import entity.bean.PessoaJuridica;
 import loja.controller.frontcontroller.AbstractApplicationController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
-import loja.dao.ClienteDAOImpl;
 import util.JNDIUtil;
 
 /**
@@ -35,7 +31,7 @@ public class CadastrarController extends AbstractApplicationController {
         try {
             Context context = JNDIUtil.getCORBAInitialContext();
             ClienteBeanRemote cliente = (ClienteBeanRemote) context.lookup("ClienteBean");
-
+            //LoginBeanRemote loginbean = (LoginBeanRemote) context.lookup("LoginBean");
             Cliente novoCliente = new Cliente();
             Login novoLogin = new Login();
 
@@ -56,7 +52,9 @@ public class CadastrarController extends AbstractApplicationController {
             
             //insere no banco            
             try {
-                cliente.clienteInsert(novoCliente);
+                cliente.save(novoCliente);
+                //loginbean.save(novoLogin);
+                
             } catch (Exception d) {
                 this.setReturnPage("/cadastro_userdup.jsp");
             }

@@ -5,14 +5,15 @@
  */
 package bean.session;
 
-import entity.bean.Cliente;
+import bean.exceptions.DupValOnIndexException;
+import entity.bean.Login;
 import javax.ejb.Remote;
 
 /**
  *
  * @author caioboratto
  */
-@Remote()
-public interface ClienteBeanRemote extends InterfaceBeanRemote<Cliente> {
+@Remote
+public interface LoginBeanRemote extends InterfaceBeanRemote<Login> {
 
 }

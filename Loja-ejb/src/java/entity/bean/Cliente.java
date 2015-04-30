@@ -45,7 +45,7 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Basic(optional = false)    
+    //@Basic(optional = false)    
     @Column(name = "id_cliente")
     private Integer idCliente;
     @Size(max = 256)

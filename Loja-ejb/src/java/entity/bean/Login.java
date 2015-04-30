@@ -26,6 +26,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.Parameter;
 
 /**
  *
@@ -41,12 +42,18 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Login.findByDesPassword", query = "SELECT l FROM Login l WHERE l.desPassword = :desPassword"),
     @NamedQuery(name = "Login.findByDatCreation", query = "SELECT l FROM Login l WHERE l.datCreation = :datCreation")})
 public class Login implements Serializable {
+
     @OneToMany(mappedBy = "idCliente")
     private List<Carrinho> carrinhoList;
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy =GenerationType.AUTO )
-    @Basic(optional = false)
+    @GeneratedValue(generator = "customForeignGenerator")
+    @org.hibernate.annotations.GenericGenerator(
+            name = "customForeignGenerator",
+            strategy = "foreign",
+            parameters = @Parameter(name = "property", value = "cliente"))
+    //@GeneratedValue(generator = "id_cliente" )
+    //@Basic(optional = false)
     @Column(name = "id_cliente")
     private Integer idCliente;
     @Size(max = 256)
@@ -59,7 +66,7 @@ public class Login implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date datCreation;
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente", insertable = false, updatable = false)
-    @OneToOne(optional = false )
+    @OneToOne(optional = false)
     private Cliente cliente;
 
     public Login() {
@@ -142,5 +149,5 @@ public class Login implements Serializable {
     public void setCarrinhoList(List<Carrinho> carrinhoList) {
         this.carrinhoList = carrinhoList;
     }
-    
+
 }
