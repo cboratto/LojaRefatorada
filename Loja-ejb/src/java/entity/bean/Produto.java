@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Produto.findByNomProduto", query = "SELECT p FROM Produto p WHERE p.nomProduto = :nomProduto"),
     @NamedQuery(name = "Produto.findByValProduto", query = "SELECT p FROM Produto p WHERE p.valProduto = :valProduto")})
 public class Produto implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -44,6 +45,9 @@ public class Produto implements Serializable {
     @Size(max = 256)
     @Column(name = "nom_produto")
     private String nomProduto;
+    @Size(max = 256)
+    @Column(name = "des_url_img")
+    private String desUrlImg;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "val_produto")
     private Double valProduto;
@@ -125,5 +129,13 @@ public class Produto implements Serializable {
     public String toString() {
         return "DAO.Produto[ idProduto=" + idProduto + " ]";
     }
-    
+
+    public String getDesUrlImg() {
+        return desUrlImg;
+    }
+
+    public void setDesUrlImg(String desUrlImg) {
+        this.desUrlImg = desUrlImg;
+    }
+
 }

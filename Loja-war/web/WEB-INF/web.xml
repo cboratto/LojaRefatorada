@@ -10,7 +10,7 @@
     <servlet-mapping>
         <servlet-name>FrontControllerServlet</servlet-name>
         <url-pattern>/FrontControllerServlet</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping> 
     <session-config>
         <session-timeout>
             30

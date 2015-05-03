@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.naming.Context;
 import loja.controller.frontcontroller.AbstractApplicationController;
 import util.JNDIUtil;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -22,9 +23,6 @@ public class LoginController extends AbstractApplicationController {
 
     @Override
     public void execute() {
-        //pagina default de retorno
-        this.setReturnPage("/login/sucesso.jsp");
-
         try {
             Context context = JNDIUtil.getCORBAInitialContext();
             ClienteBeanRemote clienteBean = (ClienteBeanRemote) context.lookup("ClienteBean");
@@ -37,10 +35,15 @@ public class LoginController extends AbstractApplicationController {
 
             //verifica se o cliente
             try {
-                cliente = clienteBean.getClientePorLogin(buscaLogin);                
-
-            } catch (Exception e) {
-                this.setReturnPage("/cadastro/cadastro_dup.jsp");
+                cliente = clienteBean.getClientePorLogin(buscaLogin);
+                this.getRequest().getSession().setAttribute("usuario", cliente);
+                this.setReturnPage("/loja/inicio.jsp");
+                
+                //teste para subida de produtos
+                
+                
+            } catch (NoResultException e) {
+                this.setReturnPage("/login/login.jsp");
             }
 
         } catch (Exception ex) {
