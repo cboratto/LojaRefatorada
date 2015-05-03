@@ -7,9 +7,8 @@ package bean.session;
 
 import bean.exceptions.DupValOnIndexException;
 import entity.bean.Cliente;
+import entity.bean.Login;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import loja.dao.ClienteDAO;
 import loja.dao.ClienteDAOImpl;
@@ -24,7 +23,7 @@ public class ClienteBean implements ClienteBeanRemote {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     Cliente cliente;
-    ClienteDAO clienteDao = new ClienteDAOImpl();
+    ClienteDAOImpl clienteDao = new ClienteDAOImpl();
 
     @Override
     public void save(Cliente cliente) throws DupValOnIndexException {
@@ -50,4 +49,8 @@ public class ClienteBean implements ClienteBeanRemote {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Cliente getClientePorLogin(Login l) {
+        return clienteDao.listarPorLogin(l);
+    }
 }

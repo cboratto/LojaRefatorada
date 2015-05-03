@@ -8,11 +8,11 @@ package entity.bean;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
+import javax.annotation.PostConstruct;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -38,7 +38,7 @@ import org.hibernate.annotations.Parameter;
 @NamedQueries({
     @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),
     @NamedQuery(name = "Login.findByIdCliente", query = "SELECT l FROM Login l WHERE l.idCliente = :idCliente"),
-    @NamedQuery(name = "Login.findByNamLogin", query = "SELECT l FROM Login l WHERE l.namLogin = :namLogin"),
+    @NamedQuery(name = "Login.findByNamLogin", query = "SELECT l FROM Login l WHERE l.namLogin = :namLogin and l.desPassword = :desPassword"),
     @NamedQuery(name = "Login.findByDesPassword", query = "SELECT l FROM Login l WHERE l.desPassword = :desPassword"),
     @NamedQuery(name = "Login.findByDatCreation", query = "SELECT l FROM Login l WHERE l.datCreation = :datCreation")})
 public class Login implements Serializable {
@@ -150,4 +150,8 @@ public class Login implements Serializable {
         this.carrinhoList = carrinhoList;
     }
 
+    @PostConstruct
+    public void setDefaultDatCriaca() {
+        this.datCreation = new Date();
+    }
 }

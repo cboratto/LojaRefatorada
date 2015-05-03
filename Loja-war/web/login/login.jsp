@@ -13,9 +13,9 @@
     </head>
     <body>
         <h1>Login</h1>
-        <form method="POST" action="/FrontControllerServlet?control=Login">            
+        <form method="POST" action="/Loja-war/FrontControllerServlet?control=Login">            
             <p>Usuario:  <input type="text" name="usuario"></p>            
-            <p>Senha:  <input type="text" name="senha"></p>            
+            <p>Senha:  <input type="password" name="senha"></p>            
             <p><input type="submit"></p>
         </form
         <li><a href="/Loja-war/cadastro/cadastro.jsp">Cadastrar-se</a></li>

@@ -6,6 +6,7 @@
 package bean.session;
 
 import entity.bean.Cliente;
+import entity.bean.Login;
 import javax.ejb.Remote;
 
 /**
@@ -15,4 +16,5 @@ import javax.ejb.Remote;
 @Remote()
 public interface ClienteBeanRemote extends InterfaceBeanRemote<Cliente> {
 
+    public Cliente getClientePorLogin(Login l);
 }

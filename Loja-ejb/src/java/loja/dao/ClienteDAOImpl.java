@@ -7,8 +7,10 @@ package loja.dao;
 
 import bean.exceptions.DupValOnIndexException;
 import bean.singleton.EntityManagerSingleton;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import org.hibernate.exception.ConstraintViolationException;
 import entity.bean.Cliente;
+import entity.bean.Login;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +42,44 @@ public class ClienteDAOImpl implements ClienteDAO {
         return listaCliente;
     }
 
+    public Cliente listarPorCpf(String numcpf) {
+        try {
+            em = EntityManagerSingleton.getInstance().getConnection();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ClienteDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //valida se o usuário já esta cadastrado na base
+        Query query = em.createNamedQuery("Cliente.findByCpf");
+        Cliente cliente = (Cliente) query.setParameter("numcpf", numcpf).getSingleResult();
+        return cliente;
+    }
+
+    public Cliente listarPorLogin(Login login) {
+        try {
+            em = EntityManagerSingleton.getInstance().getConnection();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ClienteDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Login consultaLogin;
+        Cliente consultaCliente;
+
+        //valida se o usuário já esta cadastrado na base
+        Query query = em.createNamedQuery("Login.findByNamLogin");
+
+        query = query.setParameter("namLogin", login.getNamLogin());
+        consultaLogin = (Login) query.setParameter("desPassword", login.getDesPassword()).getSingleResult();
+        
+        
+        query = em.createNamedQuery("Cliente.findByIdCliente");
+        consultaCliente = (Cliente) query.setParameter("idCliente", consultaLogin.getCliente().getIdCliente()).getSingleResult();
+
+        consultaCliente.setLogin(consultaLogin);
+        consultaLogin.setCliente(consultaCliente);
+
+        return consultaCliente;
+    }
+
     @Override
     public void inserir(Cliente e) throws DupValOnIndexException {
         try {
@@ -54,11 +94,12 @@ public class ClienteDAOImpl implements ClienteDAO {
             em.getTransaction().commit();
 
         } catch (Exception ex) {
-            if (ex instanceof MySQLIntegrityConstraintViolationException) {
+            if (ex instanceof SQLException) {
                 throw new DupValOnIndexException();
             } else {
                 em.getTransaction().rollback();
                 Logger.getLogger(ClienteDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                throw ex;
             }
         }
     }

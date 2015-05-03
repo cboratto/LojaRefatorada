@@ -8,6 +8,7 @@ package entity.bean;
 import java.io.Serializable;
 import java.util.Date;
 import javax.annotation.Generated;
+import javax.annotation.PostConstruct;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
+    @NamedQuery(name = "Cliente.findByCpf", query = "SELECT c FROM Cliente c WHERE c.numCpf = :numCpf"),
     @NamedQuery(name = "Cliente.findByIdCliente", query = "SELECT c FROM Cliente c WHERE c.idCliente = :idCliente"),
     @NamedQuery(name = "Cliente.findByNomCliente", query = "SELECT c FROM Cliente c WHERE c.nomCliente = :nomCliente"),
     @NamedQuery(name = "Cliente.findByDesEmail", query = "SELECT c FROM Cliente c WHERE c.desEmail = :desEmail"),
@@ -42,6 +44,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Cliente.findByDesComplemento", query = "SELECT c FROM Cliente c WHERE c.desComplemento = :desComplemento"),
     @NamedQuery(name = "Cliente.findByDatCriacao", query = "SELECT c FROM Cliente c WHERE c.datCriacao = :datCriacao")})
 public class Cliente implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -51,6 +54,10 @@ public class Cliente implements Serializable {
     @Size(max = 256)
     @Column(name = "nom_cliente")
     private String nomCliente;
+    @Size(max = 11)
+    @Column(name = "num_cpf")
+    private String numCpf;
+
     @Size(max = 256)
     @Column(name = "des_email")
     private String desEmail;
@@ -62,7 +69,7 @@ public class Cliente implements Serializable {
     @Size(max = 256)
     @Column(name = "des_complemento")
     private String desComplemento;
-    @Column(name = "dat_criacao",columnDefinition = "date default now()", insertable = false)
+    @Column(name = "dat_criacao", columnDefinition = "date default now()", insertable = false)
     @Temporal(TemporalType.DATE)
     private Date datCriacao;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "cliente")
@@ -139,6 +146,11 @@ public class Cliente implements Serializable {
         this.login = login;
     }
 
+    @PostConstruct
+    public void setDefaultDatCriaca() {
+        this.datCriacao = new Date();
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -162,6 +174,14 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return "entity.bean.Cliente[ idCliente=" + idCliente + " ]";
-    }  
- 
+    }
+
+    public String getNumCpf() {
+        return numCpf;
+    }
+
+    public void setNumCpf(String numCpf) {
+        this.numCpf = numCpf;
+    }
+
 }
