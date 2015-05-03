@@ -48,6 +48,9 @@ public class Produto implements Serializable {
     @Size(max = 256)
     @Column(name = "des_url_img")
     private String desUrlImg;
+    @Size(max = 3000)
+    @Column(name = "des_produto")
+    private String desProduto;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "val_produto")
     private Double valProduto;
@@ -136,6 +139,14 @@ public class Produto implements Serializable {
 
     public void setDesUrlImg(String desUrlImg) {
         this.desUrlImg = desUrlImg;
+    }
+
+    public String getDesProduto() {
+        return desProduto;
+    }
+
+    public void setDesProduto(String desProduto) {
+        this.desProduto = desProduto;
     }
 
 }

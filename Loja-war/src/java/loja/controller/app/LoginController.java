@@ -6,8 +6,11 @@
 package loja.controller.app;
 
 import bean.session.ClienteBeanRemote;
+import bean.session.ProdutoBeanRemote;
 import entity.bean.Cliente;
 import entity.bean.Login;
+import entity.bean.Produto;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -25,7 +28,8 @@ public class LoginController extends AbstractApplicationController {
     public void execute() {
         try {
             Context context = JNDIUtil.getCORBAInitialContext();
-            ClienteBeanRemote clienteBean = (ClienteBeanRemote) context.lookup("ClienteBean");
+            ClienteBeanRemote clienteBean = (ClienteBeanRemote) context.lookup("ClienteBean");            
+            ProdutoBeanRemote produtoBean = (ProdutoBeanRemote) context.lookup("ProdutoBean");
 
             Login buscaLogin = new Login();
             Cliente cliente;
@@ -39,8 +43,9 @@ public class LoginController extends AbstractApplicationController {
                 this.getRequest().getSession().setAttribute("usuario", cliente);
                 this.setReturnPage("/loja/inicio.jsp");
                 
-                //teste para subida de produtos
-                
+                //teste para subida de produtos                
+                List<Produto> listaProdutos = produtoBean.getObjectList();
+                this.getRequest().setAttribute("produtos", listaProdutos);
                 
             } catch (NoResultException e) {
                 this.setReturnPage("/login/login.jsp");
