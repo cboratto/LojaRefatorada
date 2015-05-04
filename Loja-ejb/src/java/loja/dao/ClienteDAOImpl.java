@@ -71,13 +71,13 @@ public class ClienteDAOImpl implements ClienteDAO {
         consultaLogin = (Login) query.setParameter("desPassword", login.getDesPassword()).getSingleResult();
         
         
-        query = em.createNamedQuery("Cliente.findByIdCliente");
-        consultaCliente = (Cliente) query.setParameter("idCliente", consultaLogin.getCliente().getIdCliente()).getSingleResult();
+//        query = em.createNamedQuery("Cliente.findByIdCliente");
+//        consultaCliente = (Cliente) query.setParameter("idCliente", consultaLogin.getCliente().getIdCliente()).getSingleResult();
+//
+//        consultaCliente.setLogin(consultaLogin);
+//        consultaLogin.setCliente(consultaCliente);
 
-        consultaCliente.setLogin(consultaLogin);
-        consultaLogin.setCliente(consultaCliente);
-
-        return consultaCliente;
+        return consultaLogin.getCliente();
     }
 
     @Override

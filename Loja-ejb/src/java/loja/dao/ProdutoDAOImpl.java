@@ -35,6 +35,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 
         List<Produto> listaProdutos = new ArrayList<Produto>();
 
+        //Query query = em.createNamedQuery("Produto&Categoria.findAll");
         Query query = em.createNamedQuery("Produto.findAll");
         listaProdutos = query.getResultList();
 

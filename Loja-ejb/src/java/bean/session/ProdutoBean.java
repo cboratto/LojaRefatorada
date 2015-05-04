@@ -32,7 +32,7 @@ public class ProdutoBean implements ProdutoBeanRemote {
 
     @Override
     public List<Produto> getObjectList() {
-        return produtoDao.listar();
+        return (List<Produto>) produtoDao.listar();
     }
 
     @Override

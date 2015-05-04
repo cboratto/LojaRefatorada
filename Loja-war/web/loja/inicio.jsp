@@ -27,7 +27,7 @@
                 %>
 
                 <tr>
-                    <td><img src="<%=p.getDesUrlImg()%>"  width="250" height="200" /></td>                                     
+                    <td><img src="<%=p.getDesUrlImg()%>"  width="240" height="190" /></td>                                     
                     <td><%=p.getNomProduto()%></td>
                     <td><%=p.getDesProduto()%></td>
                     <td><%=p.getIdProduto()%></td>
