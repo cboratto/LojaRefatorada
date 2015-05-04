@@ -20,6 +20,7 @@ import util.JNDIUtil;
  *
  * @author caioboratto
  */
+
 public class CadastrarController extends AbstractApplicationController {
 
     //@EJB(beanName = "bean.session.ClienteBean")

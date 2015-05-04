@@ -28,7 +28,7 @@ public class LoginController extends AbstractApplicationController {
     public void execute() {
         try {
             Context context = JNDIUtil.getCORBAInitialContext();
-            ClienteBeanRemote clienteBean = (ClienteBeanRemote) context.lookup("ClienteBean");            
+            ClienteBeanRemote clienteBean = (ClienteBeanRemote) context.lookup("ClienteBean");
             ProdutoBeanRemote produtoBean = (ProdutoBeanRemote) context.lookup("ProdutoBean");
 
             Login buscaLogin = new Login();
@@ -37,20 +37,10 @@ public class LoginController extends AbstractApplicationController {
             buscaLogin.setNamLogin(this.getRequest().getParameter("usuario"));
             buscaLogin.setDesPassword(this.getRequest().getParameter("senha"));
 
-            //verifica se o cliente
-            try {
-                cliente = clienteBean.getClientePorLogin(buscaLogin);
-                this.getRequest().getSession().setAttribute("usuario", cliente);
-                this.setReturnPage("/loja/inicio.jsp");
-                
-                //teste para subida de produtos                
-                List<Produto> listaProdutos = produtoBean.getObjectList();
-                this.getRequest().setAttribute("produtos", listaProdutos);
-                
-            } catch (NoResultException e) {
-                this.setReturnPage("/login/login.jsp");
-            }
+            cliente = clienteBean.getClientePorLogin(buscaLogin);
+            this.getRequest().getSession().setAttribute("usuario", cliente);
 
+            this.setReturnPage("/FrontControllerServlet?control=Loja");
         } catch (Exception ex) {
             Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);
         }

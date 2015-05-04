@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class AbstractApplicationController implements ApplicationController {
 
     private HttpServletRequest request;
+
     protected String returnPage;
 
     @Override
@@ -21,7 +22,6 @@ public abstract class AbstractApplicationController implements ApplicationContro
         return returnPage;
     }
 
-
     public HttpServletRequest getRequest() {
         return request;
     }
@@ -29,4 +29,5 @@ public abstract class AbstractApplicationController implements ApplicationContro
     public void setRequest(HttpServletRequest request) {
         this.request = request;
     }
+
 }

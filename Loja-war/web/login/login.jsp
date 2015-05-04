@@ -17,7 +17,8 @@
             <p>Usuario:  <input type="text" name="usuario"></p>            
             <p>Senha:  <input type="password" name="senha"></p>            
             <p><input type="submit"></p>
-        </form
+        </form>
         <li><a href="/Loja-war/cadastro/cadastro.jsp">Cadastrar-se</a></li>
+        <li><a href="/Loja-war/FrontControllerServlet?control=Loja">Acessar Loja</a></li>
     </body>
 </html>
