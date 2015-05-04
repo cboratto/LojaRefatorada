@@ -43,7 +43,8 @@
                     <td><%=p.getNomProduto()%></td>
                     <td><%=p.getDesProduto()%></td>
                     <td><%=p.getIdCategoria().getNomCategoria()%></td>
-                    <td><%=p.getValProduto()%></td>                    
+                    <td><%=p.getValProduto()%></td>          
+                    <td><input type="button" name="Adicionar" ></td>
                 </tr>
                 <%
                     }
