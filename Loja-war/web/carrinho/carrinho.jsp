@@ -28,7 +28,7 @@
             }
         %>
         <h3>Usuário: <%=usuario%></h3>
-        <form method="POST" action="/Loja-war/FrontControllerServlet?control=Loja&orig=adicionaItem">
+        <form method="POST" action="/Loja-war/FrontControllerServlet?control=Carrinho&action=efetuarCompra">
             <table border="1">
                 <tr><th>Foto</th><th>Nome</th><th>Categoria</th><th>Quantidade</th><th>Valor</th><th>Valor total</th>
                 </tr>
@@ -52,6 +52,7 @@
                     }
                 %>
             </table>
+            <h4>Comprar</h4>
             <p><input type="submit" name="Enviar"></p>
         </form>
     </body>

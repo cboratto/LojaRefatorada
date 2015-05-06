@@ -12,6 +12,8 @@ import entity.bean.Produto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateful;
+import loja.dao.CarrinhoDAO;
+import loja.dao.CarrinhoDAOImpl;
 
 /**
  *
@@ -40,7 +42,8 @@ public class CarrinhoBean implements CarrinhoBeanRemote {
 
     @Override
     public void save(Carrinho e) throws DupValOnIndexException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        CarrinhoDAO carrinhoDAO = new CarrinhoDAOImpl();
+        carrinhoDAO.inserir(e);
     }
 
     @Override

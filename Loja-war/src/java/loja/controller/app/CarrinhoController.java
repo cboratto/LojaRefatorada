@@ -6,7 +6,8 @@
 package loja.controller.app;
 
 import bean.session.CarrinhoBeanRemote;
-import bean.session.ProdutoBeanRemote;
+import entity.bean.Carrinho;
+import entity.bean.Cliente;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -21,16 +22,37 @@ public class CarrinhoController extends AbstractApplicationController {
 
     @Override
     public void execute() {
+        String action;
+
+        //seleciona o parametro caso estiver setado
         try {
-            //busca bean
-            Context context = JNDIUtil.getCORBAInitialContext();
-            CarrinhoBeanRemote carrinhoBean = (CarrinhoBeanRemote) context.lookup("CarrinhoBean");
-
-            //Produto adicionado redireciona para loja
-            this.setReturnPage("/carrinho/carrinho.jsp");
-        } catch (Exception ex) {
-            Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);
+            action = this.getRequest().getParameter("action");
+            if (action == null) {
+                action = "inicio";
+            }
+        } catch (Exception e) {
+            action = "inicio";
         }
-    }
+        if (!action.equals("efetuarCompra")) {
+            try {
+                //busca bean
+                Context context = JNDIUtil.getCORBAInitialContext();
+                CarrinhoBeanRemote carrinhoBean = (CarrinhoBeanRemote) context.lookup("CarrinhoBean");
 
+                //Produto adicionado redireciona para loja
+                this.setReturnPage("/carrinho/carrinho.jsp");
+            } catch (Exception ex) {
+                Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            // COMPRAR
+        } else {
+            Cliente cliente = (Cliente) this.getRequest().getSession().getAttribute("usuario");
+            Carrinho carrinho = (Carrinho) this.getRequest().getSession().getAttribute("carrinho");
+            
+            carrinho.setIdCliente(cliente.getLogin());
+            cliente.getLogin().addCarrinho(carrinho);
+        }
+
+    }
 }

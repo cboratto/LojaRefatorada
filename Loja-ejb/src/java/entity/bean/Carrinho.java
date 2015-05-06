@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,6 +24,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.Parameter;
 
 /**
  *
@@ -48,6 +50,11 @@ public class Carrinho implements Serializable {
     private Date datCriacao;
     @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
     @ManyToOne
+    @GeneratedValue(generator = "customForeignGenerator")
+    @org.hibernate.annotations.GenericGenerator(
+            name = "customForeignGenerator",
+            strategy = "foreign",
+            parameters = @Parameter(name = "property", value = "login"))///added by me
     private Login idCliente;
     //eu adicionei validar se o erro nao esta aqui
     @OneToMany(mappedBy = "idCarrinho")
