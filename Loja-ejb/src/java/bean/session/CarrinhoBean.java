@@ -25,7 +25,7 @@ public class CarrinhoBean implements CarrinhoBeanRemote {
 
     @Override
     public Object getObject() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return carrinho;
     }
 
     @Override
@@ -47,12 +47,14 @@ public class CarrinhoBean implements CarrinhoBeanRemote {
     public void addItemCarrinho(Produto produto) {
         CarrinhoItem carrinhoItem = new CarrinhoItem();
         //inicializa o carrinho
+        boolean encontrou = false;
         if (carrinho == null) {
             carrinho = new Carrinho();
             listaCarrinhoItem = new ArrayList<CarrinhoItem>();
 
             //adiona        
             carrinhoItem.setIdProduto(produto);
+            carrinhoItem.addQtdItem();
             carrinhoItem.setIdCarrinho(carrinho);
 
             listaCarrinhoItem.add(carrinhoItem);
@@ -62,14 +64,16 @@ public class CarrinhoBean implements CarrinhoBeanRemote {
             for (int i = 0; i < listaCarrinhoItem.size(); i++) {
                 if (listaCarrinhoItem.get(i).getIdProduto().getIdProduto().equals(produto.getIdProduto())) {
                     listaCarrinhoItem.get(i).addQtdItem();
-                } else {
-
-                    carrinhoItem.setIdProduto(produto);
-                    carrinhoItem.setIdCarrinho(carrinho);
-
-                    listaCarrinhoItem.add(carrinhoItem);
+                    encontrou = true;
+                    break;
                 }
+            }
+            if (!encontrou) {
 
+                carrinhoItem.setIdProduto(produto);
+                carrinhoItem.setIdCarrinho(carrinho);
+
+                listaCarrinhoItem.add(carrinhoItem);
             }
 
         }

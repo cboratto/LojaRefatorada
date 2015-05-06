@@ -27,6 +27,7 @@
             }
         %>
         <h3>Usuário: <%=usuario%></h3>
+        <li><a href="/Loja-war/FrontControllerServlet?control=Carrinho">Visualizar Carrinho</a></li>
         <form method="POST" action="/Loja-war/FrontControllerServlet?control=Loja&orig=adicionaItem">
             <table border="1">
                 <tr><th>Foto</th><th>Nome</th><th>Descrição</th><th>Categoria</th><th>Valor</th>
