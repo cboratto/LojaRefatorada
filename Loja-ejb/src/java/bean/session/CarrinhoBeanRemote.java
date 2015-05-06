@@ -5,6 +5,7 @@
  */
 package bean.session;
 
+import entity.bean.Carrinho;
 import entity.bean.Produto;
 import javax.ejb.Remote;
 
@@ -13,7 +14,7 @@ import javax.ejb.Remote;
  * @author caioboratto
  */
 @Remote
-public interface ProdutoBeanRemote extends InterfaceBeanRemote<Produto> {
+public interface CarrinhoBeanRemote extends InterfaceBeanRemote<Carrinho> {
 
-    public Produto getProdutoSelecionado(Integer id);
+    public void addItemCarrinho(Produto produto);
 }

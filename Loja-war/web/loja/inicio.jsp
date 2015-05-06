@@ -27,7 +27,7 @@
             }
         %>
         <h3>Usuário: <%=usuario%></h3>
-        <form method="POST" action="/MackTur/FrontControllerServlet?control=SaveSelectedFlightServlet">
+        <form method="POST" action="/Loja-war/FrontControllerServlet?control=Loja&orig=adicionaItem">
             <table border="1">
                 <tr><th>Foto</th><th>Nome</th><th>Descrição</th><th>Categoria</th><th>Valor</th>
                 </tr>
@@ -44,7 +44,7 @@
                     <td><%=p.getDesProduto()%></td>
                     <td><%=p.getIdCategoria().getNomCategoria()%></td>
                     <td><%=p.getValProduto()%></td>          
-                    <td><input type="button" name="Adicionar" ></td>
+                    <td><input type="radio" name="idProduto" value=<%=p.getIdProduto() %>></td>
                 </tr>
                 <%
                     }

@@ -57,4 +57,19 @@ public class ProdutoDAOImpl implements ProdutoDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Produto listarProdutoById(Integer id) {
+        try {
+            em = EntityManagerSingleton.getInstance().getConnection();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ClienteDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Query query = em.createNamedQuery("Produto&Categoria.findAll");
+        Query query = em.createNamedQuery("Produto.findByIdProduto");
+        Produto produto = (Produto) query.setParameter("idProduto", id).getSingleResult();
+
+        return produto;
+    }
 }
+

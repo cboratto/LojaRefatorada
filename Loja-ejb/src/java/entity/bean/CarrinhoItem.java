@@ -43,7 +43,7 @@ public class CarrinhoItem implements Serializable {
     @Column(name = "id_carrinho_item")
     private Integer idCarrinhoItem;
     @Column(name = "qtd_item")
-    private Integer qtdItem;
+    private Integer qtdItem=0;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "val_total")
     private Double valTotal;
@@ -79,8 +79,8 @@ public class CarrinhoItem implements Serializable {
         return qtdItem;
     }
 
-    public void setQtdItem(Integer qtdItem) {
-        this.qtdItem = qtdItem;
+    public void addQtdItem() {
+        this.qtdItem++;
     }
 
     public Double getValTotal() {

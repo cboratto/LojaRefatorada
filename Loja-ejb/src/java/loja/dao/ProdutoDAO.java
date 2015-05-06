@@ -13,4 +13,5 @@ import entity.bean.Produto;
  */
 public interface ProdutoDAO extends DAOInterface<Produto> {
 
+    public Produto listarProdutoById(Integer id);
 }
