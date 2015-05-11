@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,6 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Parameter;
 
 /**
  *
@@ -36,14 +39,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CarrinhoItem.findByDatCriacao", query = "SELECT c FROM CarrinhoItem c WHERE c.datCriacao = :datCriacao"),
     @NamedQuery(name = "CarrinhoItem.findByDatUpdate", query = "SELECT c FROM CarrinhoItem c WHERE c.datUpdate = :datUpdate")})
 public class CarrinhoItem implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
+    //@Basic(optional = false)    
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_carrinho_item")
     private Integer idCarrinhoItem;
     @Column(name = "qtd_item")
-    private Integer qtdItem=0;
+    private Integer qtdItem = 0;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "val_total")
     private Double valTotal;
@@ -55,9 +59,20 @@ public class CarrinhoItem implements Serializable {
     private Date datUpdate;
     @JoinColumn(name = "id_produto", referencedColumnName = "id_produto")
     @ManyToOne
+    @GeneratedValue(generator = "produtoForeign")
+    @org.hibernate.annotations.GenericGenerator(
+            name = "produtoForeign",
+            strategy = "foreign",
+            parameters = @Parameter(name = "property", value = "produto"))
     private Produto idProduto;
+    //
     @JoinColumn(name = "id_carrinho", referencedColumnName = "id_carrinho")
     @ManyToOne
+    @GeneratedValue(generator = "carrinhoForeign")
+    @org.hibernate.annotations.GenericGenerator(
+            name = "carrinhoForeign",
+            strategy = "foreign",
+            parameters = @Parameter(name = "property", value = "carrinho"))
     private Carrinho idCarrinho;
 
     public CarrinhoItem() {
@@ -147,5 +162,5 @@ public class CarrinhoItem implements Serializable {
     public String toString() {
         return "DAO.CarrinhoItem[ idCarrinhoItem=" + idCarrinhoItem + " ]";
     }
-    
+
 }

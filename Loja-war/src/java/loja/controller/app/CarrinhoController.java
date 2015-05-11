@@ -6,8 +6,10 @@
 package loja.controller.app;
 
 import bean.session.CarrinhoBeanRemote;
+import bean.session.PedidoBeanRemote;
 import entity.bean.Carrinho;
 import entity.bean.Cliente;
+import entity.bean.Pedido;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -47,11 +49,27 @@ public class CarrinhoController extends AbstractApplicationController {
 
             // COMPRAR
         } else {
-            Cliente cliente = (Cliente) this.getRequest().getSession().getAttribute("usuario");
-            Carrinho carrinho = (Carrinho) this.getRequest().getSession().getAttribute("carrinho");
-            
-            carrinho.setIdCliente(cliente.getLogin());
-            cliente.getLogin().addCarrinho(carrinho);
+            try {
+                //busca bean
+                Context context = JNDIUtil.getCORBAInitialContext();
+                PedidoBeanRemote pedidoBean = (PedidoBeanRemote) context.lookup("PedidoBean");
+
+                Cliente cliente = (Cliente) this.getRequest().getSession().getAttribute("usuario");
+                Carrinho carrinho = (Carrinho) this.getRequest().getSession().getAttribute("carrinho");
+
+                carrinho.setIdCliente(cliente.getLogin());
+                cliente.getLogin().addCarrinho(carrinho);
+
+                Pedido novoPedido = new Pedido();
+                novoPedido.setIdCarrinho(carrinho);
+
+                pedidoBean.save(novoPedido);
+
+                this.setReturnPage("/pedido/pedido.jsp");
+            } catch (Exception ex) {
+                Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
 
     }

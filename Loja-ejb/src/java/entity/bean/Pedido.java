@@ -11,6 +11,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -43,8 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
+    //@Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)    
     @Column(name = "id_pedido")
     private Integer idPedido;
     @Column(name = "id_pagamento")
