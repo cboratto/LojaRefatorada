@@ -49,13 +49,13 @@ public class PedidoBean implements PedidoBeanRemote {
     }
 
     @Override
-    public void enviarEmailParaComprador(Integer idPedido, String nomeCliente, String desEmail) {
+    public void enviarEmailParaComprador(Integer idPedido, String nomeCliente, String desEmail, String descricao) {
         if (lojaMail == null) {
             lojaMail = new LojaMail();
         }
 
         try {
-            lojaMail.sendLojaMail(idPedido, nomeCliente, desEmail);
+            lojaMail.sendLojaMail(idPedido, nomeCliente, desEmail, descricao);
         } catch (UnsupportedEncodingException ex) {
             ex.printStackTrace();
             Logger.getLogger(PedidoBean.class.getName()).log(Level.SEVERE, null, ex);

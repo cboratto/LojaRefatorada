@@ -22,7 +22,7 @@ public class LojaMail {
     }
 
     ;
-    public void sendLojaMail(Integer idPedido, String nomeCliente, String desEmail) throws UnsupportedEncodingException {
+    public void sendLojaMail(Integer idPedido, String nomeCliente, String desEmail, String descricao) throws UnsupportedEncodingException {
 
         final String username = "lojaapd3@gmail.com";
         final String password = "1234mudar_";
@@ -36,6 +36,7 @@ public class LojaMail {
         String msgBody = "Prezado " + nomeCliente + "\n"
                 + "Seu pedido de número " + idPedido + " foi efetivado com sucesso."
                 + "\n"
+                + descricao +"\n"
                 + "Estamos aguardando efetivação do pagamento para encaminhar a mercadoria."
                 + "\n"
                 + "Obrigado."

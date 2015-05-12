@@ -8,6 +8,7 @@ package loja.controller.app;
 import bean.session.CarrinhoBeanRemote;
 import bean.session.PedidoBeanRemote;
 import entity.bean.Carrinho;
+import entity.bean.CarrinhoItem;
 import entity.bean.Cliente;
 import entity.bean.Pedido;
 import java.util.logging.Level;
@@ -65,9 +66,15 @@ public class CarrinhoController extends AbstractApplicationController {
 
                 Integer idPedido = pedidoBean.saveReturnPedido(novoPedido);
                 this.getRequest().setAttribute("idpedido", idPedido);
+                this.getRequest().setAttribute("desemail", cliente.getDesEmail());
                 this.setReturnPage("/pedido/efetuado.jsp");
                 
-                pedidoBean.enviarEmailParaComprador(idPedido, cliente.getNomCliente(), cliente.getDesEmail());
+                String descricao;
+                descricao = "Nome Produto\tQuantidade\tValor unitário\tValor total\n";
+                for (CarrinhoItem c : carrinho.getCarrinhoItemList()) {
+                    descricao = descricao + c.getIdProduto().getNomProduto()+"\t"+c.getQtdItem()+"\t"+c.getIdProduto().getValProduto()+"\t"+c.getIdProduto().getValProduto()*c.getQtdItem()+"\n" ;                    
+                }
+                pedidoBean.enviarEmailParaComprador(idPedido, cliente.getNomCliente(), cliente.getDesEmail(),descricao);
                 
                 this.getRequest().getSession().setAttribute("carrinho", null);
             } catch (Exception ex) {
