@@ -67,6 +67,8 @@ public class CarrinhoController extends AbstractApplicationController {
                 this.getRequest().setAttribute("idpedido", idPedido);
                 this.setReturnPage("/pedido/efetuado.jsp");
                 
+                pedidoBean.enviarEmailParaComprador(idPedido, cliente.getNomCliente(), cliente.getDesEmail());
+                
                 this.getRequest().getSession().setAttribute("carrinho", null);
             } catch (Exception ex) {
                 Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);

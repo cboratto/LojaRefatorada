@@ -17,4 +17,6 @@ import javax.ejb.Remote;
 public interface PedidoBeanRemote extends InterfaceBeanRemote<Pedido> {
 
     public Integer saveReturnPedido(Pedido p);
+    
+    public void enviarEmailParaComprador (Integer idPedido, String nomeCliente, String desEmail);
 }
