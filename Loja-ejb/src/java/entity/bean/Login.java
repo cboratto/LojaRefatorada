@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,7 +45,7 @@ import org.hibernate.annotations.Parameter;
     @NamedQuery(name = "Login.findByDatCreation", query = "SELECT l FROM Login l WHERE l.datCreation = :datCreation")})
 public class Login implements Serializable {
 
-    @OneToMany(mappedBy = "idCliente", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "idCliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)    
     private List<Carrinho> carrinhoList;
     private static final long serialVersionUID = 1L;
     @Id

@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entity.bean;
+package loja.dao;
 
 import bean.exceptions.DupValOnIndexException;
 import bean.singleton.EntityManagerSingleton;
+import entity.bean.Carrinho;
+import entity.bean.Pedido;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
-import loja.dao.PedidoDAO;
 
 /**
  *
@@ -28,22 +29,7 @@ public class PedidoDAOImpl implements PedidoDAO {
 
     @Override
     public void inserir(Pedido e) throws DupValOnIndexException {
-        try {
-            em = EntityManagerSingleton.getInstance().getConnection();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PedidoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try {
-            em.getTransaction().begin();
-            em.persist(e);
-            em.getTransaction().commit();
-
-        } catch (Exception ex) {
-            em.getTransaction().rollback();
-            Logger.getLogger(PedidoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw ex;
-        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -57,4 +43,28 @@ public class PedidoDAOImpl implements PedidoDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Integer inserirRetorna(Pedido p) {
+        try {
+            em = EntityManagerSingleton.getInstance().getConnection();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PedidoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Carrinho carrinho = p.getIdCarrinho();
+        try {
+            em.getTransaction().begin();
+            em.persist(carrinho);
+            p.setIdCarrinho(carrinho);
+            em.persist(p);
+            em.getTransaction().commit();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Logger.getLogger(PedidoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            em.getTransaction().rollback();
+            Logger.getLogger(PedidoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        }
+        return p.getIdPedido();
+    }
 }

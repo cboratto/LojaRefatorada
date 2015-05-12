@@ -13,4 +13,5 @@ import entity.bean.Pedido;
  */
 public interface PedidoDAO extends DAOInterface<Pedido> {
 
+    public Integer inserirRetorna(Pedido p);
 }

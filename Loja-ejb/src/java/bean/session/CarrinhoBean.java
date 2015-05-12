@@ -72,7 +72,7 @@ public class CarrinhoBean implements CarrinhoBeanRemote {
                 }
             }
             if (!encontrou) {
-
+                carrinhoItem.addQtdItem();
                 carrinhoItem.setIdProduto(produto);
                 carrinhoItem.setIdCarrinho(carrinho);
 

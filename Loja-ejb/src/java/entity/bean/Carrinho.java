@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,7 +45,6 @@ public class Carrinho implements Serializable {
     @Id
     //@Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
     @Column(name = "id_carrinho")
     private Integer idCarrinho;
     @Column(name = "dat_criacao")
@@ -59,7 +59,7 @@ public class Carrinho implements Serializable {
             parameters = @Parameter(name = "property", value = "login"))///added by me
     private Login idCliente;
     //eu adicionei validar se o erro nao esta aqui
-    @OneToMany(mappedBy = "idCarrinho")
+    @OneToMany(mappedBy = "idCarrinho", cascade = CascadeType.ALL)
     private List<CarrinhoItem> carrinhoItemList;
 
     public Carrinho() {

@@ -30,9 +30,9 @@
         <h3>Usuário: <%=usuario%></h3>
         <form method="POST" action="/Loja-war/FrontControllerServlet?control=Carrinho&action=efetuarCompra">
             <table border="1">
-                <tr><th>Foto</th><th>Nome</th><th>Categoria</th><th>Quantidade</th><th>Valor</th><th>Valor total</th>
-                </tr>
-                </tr>
+                <% try { %>
+                <tr><th>Foto</th><th>Nome</th><th>Categoria</th><th>Quantidade</th><th>Valor</th><th>Valor total</th></tr>
+
                 <%
                     Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
                     List<CarrinhoItem> listaCarrinhoItem = carrinho.getCarrinhoItemList();
@@ -50,7 +50,13 @@
                 </tr>
                 <%
                     }
+                } catch (Exception e) {
                 %>
+                <h3>Nao existe objetos no carrinho</h3>
+                <%
+                    }
+                %>
+
             </table>
             <h4>Comprar</h4>
             <p><input type="submit" name="Enviar"></p>

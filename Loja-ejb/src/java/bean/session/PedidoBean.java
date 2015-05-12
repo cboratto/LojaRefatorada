@@ -7,15 +7,16 @@ package bean.session;
 
 import bean.exceptions.DupValOnIndexException;
 import entity.bean.Pedido;
-import entity.bean.PedidoDAOImpl;
+import loja.dao.PedidoDAOImpl;
 import java.util.List;
 import javax.ejb.Stateless;
 import loja.dao.PedidoDAO;
 
 @Stateless(mappedName = "PedidoBean")
 public class PedidoBean implements PedidoBeanRemote {
+
     PedidoDAO pedidoDAO = new PedidoDAOImpl();
-    
+
     @Override
     public Object getObject() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -33,7 +34,13 @@ public class PedidoBean implements PedidoBeanRemote {
 
     @Override
     public void save(Pedido e) throws DupValOnIndexException {
-        pedidoDAO.inserir(e);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Integer saveReturnPedido(Pedido p) {
+        return pedidoDAO.inserirRetorna(p);
+
     }
 
 }

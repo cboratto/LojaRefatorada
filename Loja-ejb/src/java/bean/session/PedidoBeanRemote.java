@@ -5,6 +5,7 @@
  */
 package bean.session;
 
+import bean.exceptions.DupValOnIndexException;
 import entity.bean.Pedido;
 import javax.ejb.Remote;
 
@@ -15,4 +16,5 @@ import javax.ejb.Remote;
 @Remote
 public interface PedidoBeanRemote extends InterfaceBeanRemote<Pedido> {
 
+    public Integer saveReturnPedido(Pedido p);
 }

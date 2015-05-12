@@ -25,7 +25,7 @@ public class CarrinhoController extends AbstractApplicationController {
     @Override
     public void execute() {
         String action;
-
+        CarrinhoBeanRemote carrinhoBean;
         //seleciona o parametro caso estiver setado
         try {
             action = this.getRequest().getParameter("action");
@@ -39,7 +39,7 @@ public class CarrinhoController extends AbstractApplicationController {
             try {
                 //busca bean
                 Context context = JNDIUtil.getCORBAInitialContext();
-                CarrinhoBeanRemote carrinhoBean = (CarrinhoBeanRemote) context.lookup("CarrinhoBean");
+                carrinhoBean = (CarrinhoBeanRemote) context.lookup("CarrinhoBean");
 
                 //Produto adicionado redireciona para loja
                 this.setReturnPage("/carrinho/carrinho.jsp");
@@ -63,9 +63,11 @@ public class CarrinhoController extends AbstractApplicationController {
                 Pedido novoPedido = new Pedido();
                 novoPedido.setIdCarrinho(carrinho);
 
-                pedidoBean.save(novoPedido);
-
-                this.setReturnPage("/pedido/pedido.jsp");
+                Integer idPedido = pedidoBean.saveReturnPedido(novoPedido);
+                this.getRequest().setAttribute("idpedido", idPedido);
+                this.setReturnPage("/pedido/efetuado.jsp");
+                
+                this.getRequest().getSession().setAttribute("carrinho", null);
             } catch (Exception ex) {
                 Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);
             }
