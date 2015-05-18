@@ -68,14 +68,14 @@ public class CarrinhoController extends AbstractApplicationController {
                 this.getRequest().setAttribute("idpedido", idPedido);
                 this.getRequest().setAttribute("desemail", cliente.getDesEmail());
                 this.setReturnPage("/pedido/efetuado.jsp");
-                
+
                 String descricao;
                 descricao = "Nome Produto\tQuantidade\tValor unitário\tValor total\n";
                 for (CarrinhoItem c : carrinho.getCarrinhoItemList()) {
-                    descricao = descricao + c.getIdProduto().getNomProduto()+"\t"+c.getQtdItem()+"\t"+c.getIdProduto().getValProduto()+"\t"+c.getIdProduto().getValProduto()*c.getQtdItem()+"\n" ;                    
+                    descricao = descricao + c.getIdProduto().getNomProduto() + "\t" + c.getQtdItem() + "\t" + c.getIdProduto().getValProduto() + "\t" + c.getIdProduto().getValProduto() * c.getQtdItem() + "\n";
                 }
-                pedidoBean.enviarEmailParaComprador(idPedido, cliente.getNomCliente(), cliente.getDesEmail(),descricao);
-                
+                pedidoBean.enviarEmailParaComprador(idPedido, cliente.getNomCliente(), cliente.getDesEmail(), descricao);
+
                 this.getRequest().getSession().setAttribute("carrinho", null);
             } catch (Exception ex) {
                 Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);

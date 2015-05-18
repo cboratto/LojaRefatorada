@@ -42,6 +42,7 @@ public class LoginController extends AbstractApplicationController {
 
             this.setReturnPage("/FrontControllerServlet?control=Loja");
         } catch (Exception ex) {
+            ex.printStackTrace();
             Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
