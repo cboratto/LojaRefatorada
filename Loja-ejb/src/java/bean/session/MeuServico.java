@@ -21,7 +21,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author caioboratto
  */
-@Path("servico")
+@Path("consulta")
 @Stateless
 public class MeuServico {
 

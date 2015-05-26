@@ -31,7 +31,7 @@ public class ConsultaProdutoBean  {
     }
 
     public ListaProduto getListaProduto() {
-        System.out.println("Pegou o produto");
+        //System.out.println("Pegou o produto");
         return listaProdutos;
     }
 
